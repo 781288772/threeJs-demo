@@ -24,13 +24,13 @@ const  initThree = ()=> {
       camera.position.z = 10;
 
       const gltfLoader = new GLTFLoader()
-      gltfLoader.load('/public/1.gltf', (gltf:any) => {
+      gltfLoader.load('/public/scene.gltf', (gltf:any) => {
         var model = gltf.scene
            //遍历模型每部分
            model.traverse((o:any) => {
           //将图片作为纹理加载
           let explosionTexture = new THREE.TextureLoader().load(
-            '/public/textures/potted_plant_01_leaves_diff_4k.jpg'
+            '/public/textures/Material_baseColor.png'
           )
           //调整纹理图的方向
           explosionTexture.flipY = false
@@ -43,42 +43,30 @@ const  initThree = ()=> {
         })
         scene.add(model)
       })
-      function resizeRendererToDisplaySize(renderer:any) {
-        const canvas = renderer.domElement
-        var width = window.innerWidth
-        var height = window.innerHeight
-        var canvasPixelWidth = canvas.width / window.devicePixelRatio
-        var canvasPixelHeight = canvas.height / window.devicePixelRatio
+     
+      // const hemLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6)
+      // hemLight.position.set(0, 48, 0)
+      // scene.add(hemLight)
 
-        const needResize = canvasPixelWidth !== width || canvasPixelHeight !== height
-        if (needResize) {
-          renderer.setSize(width, height, false)
-        }
-        return needResize
-      }
-      const hemLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6)
-      hemLight.position.set(0, 48, 0)
-      scene.add(hemLight)
+      // const dirLight = new THREE.DirectionalLight(0xffffff, 0.6)
+      // //光源等位置
+      // dirLight.position.set(-10, 8, -5)
+      // //可以产生阴影
+      // dirLight.castShadow = true
+      // dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024)
+      // scene.add(dirLight)
 
-      const dirLight = new THREE.DirectionalLight(0xffffff, 0.6)
-      //光源等位置
-      dirLight.position.set(-10, 8, -5)
-      //可以产生阴影
-      dirLight.castShadow = true
-      dirLight.shadow.mapSize = new THREE.Vector2(1024, 1024)
-      scene.add(dirLight)
+      // let floorGeometry = new THREE.PlaneGeometry(8000, 8000)
+      // let floorMaterial = new THREE.MeshPhongMaterial({
+      //   color: 0x857ebb,
+      //   shininess: 0,
+      // })
 
-      let floorGeometry = new THREE.PlaneGeometry(8000, 8000)
-      let floorMaterial = new THREE.MeshPhongMaterial({
-        color: 0x857ebb,
-        shininess: 0,
-      })
-
-      let floor = new THREE.Mesh(floorGeometry, floorMaterial)
-      floor.rotation.x = -0.5 * Math.PI
-      floor.receiveShadow = true
-      floor.position.y = -0.001
-      scene.add(floor)
+      // let floor = new THREE.Mesh(floorGeometry, floorMaterial)
+      // floor.rotation.x = -0.5 * Math.PI
+      // floor.receiveShadow = true
+      // floor.position.y = -0.001
+      // scene.add(floor)
 
 
       const controls = new OrbitControls(camera, renderer.domElement)
@@ -96,6 +84,22 @@ const  initThree = ()=> {
         }
       }
       animate()
+      function resizeRendererToDisplaySize(renderer) {
+        const canvas = renderer.domElement
+        var width = window.innerWidth
+        var height = window.innerHeight
+        var canvasPixelWidth = canvas.width / window.devicePixelRatio
+        var canvasPixelHeight = canvas.height / window.devicePixelRatio
+
+        const needResize =
+          canvasPixelWidth !== width || canvasPixelHeight !== height
+        if (needResize) {
+          renderer.setSize(width, height, false)
+        }
+        return needResize
+      }
+
+    
     }
 </script>
 
@@ -104,7 +108,11 @@ const  initThree = ()=> {
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
+#three {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 </style>
